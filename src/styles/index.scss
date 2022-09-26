@@ -1,0 +1,127 @@
+*{
+    font-family: 'Quicksand', sans-serif;;
+}
+body{
+   background-color: rgb(250, 250, 250)
+}
+.form-control, button, input, select {
+    transition: all 0.3s ease-in-out;
+    outline: none !important;
+    box-shadow: none;
+    cursor: pointer;
+}
+.text-blue{
+    color: #3366FF;
+}
+.text-red {
+    color: #D70801;
+}
+.font-size13 {
+    font-size: 13px;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.text-gray2 {
+    color: #374756;
+}
+.button {
+    line-height: 1em;
+    border-radius: 8px;
+    position: relative;
+    transition: all .35s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  
+    &.size-l {
+      height: 50px;
+  
+      font-size: 16px;
+      line-height: 140%;
+    }
+  
+    &.size-m {
+      height: 44px;
+      font-size: 14px;
+      line-height: 145%;
+    }
+  
+    &.size-s {
+      height: 38px;
+      font-size: 12px;
+      line-height: 144%;
+    }
+  
+    &:hover {
+      opacity: 0.8
+    }
+  }
+  
+  .button-primary {
+    border: none;
+    background-color: #000000;
+    color: #FFC200;
+    position: relative;
+    overflow: hidden;
+  
+    &::before {
+      width: 36px;
+      height: 36px;
+      content: "";
+      background: linear-gradient(180deg, #FFD600 3.5%, #FFC200 96.6%);
+      position: absolute;
+      right: -18px;
+      bottom: -20px;
+      transform: rotate(45deg);
+    }
+  
+    &.w-300 {
+      width: 300px;
+    }
+  
+  }
+  
+  .button-orange {
+    background: linear-gradient(180deg, #FFD600 3.5%, #FFC200 96.6%);
+  }
+  
+  .button:disabled {
+    opacity: 0.5;
+  
+  }
+  
+  
+  .button-outline {
+    border: 1px solid #000000;
+  }
+  .button-white{
+    background: #FFFFFF;
+  }
+  .button-size36{
+    height: 36px;
+    font-weight: 700;
+  font-size: 14px;
+  line-height: 145%;
+  }
+  
+  .button-danger {
+    border: 1px solid red;
+    background-color: red;
+    color: #fff;
+  }
+#app-root{
+    min-height: 100vh;
+    max-width: 376px;
+    margin:0 auto;
+    .heading-2{
+        font-size: 22px;
+        font-weight: 700;
+    }
+    .logo{
+        max-width: 100%;
+        width: 200px;
+        margin-bottom: 20px;
+    }
+}
