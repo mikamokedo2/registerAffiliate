@@ -55,9 +55,8 @@ const RegisterContainer: React.FC = () => {
 
   let [searchParams] = useSearchParams();
     useEffect(() => {
-    const sdiaf = searchParams.get('ref');
-    const voucherCode = searchParams.get('code');
-    
+    const sdiaf = searchParams.get('affcode');
+    const voucherCode = searchParams.get('vocuhercode');
     if (sdiaf) {
       localStorage.setItem('shopdi-connect', String(sdiaf));
     }
@@ -67,8 +66,19 @@ const RegisterContainer: React.FC = () => {
   }, [searchParams])
 
   const loginSuccess = (token: string, refresh_token: string) => {
-      console.log("login success")
+
+    if(device === 'android'){
+      window.open("https://play.google.com/store/apps/details?id=io.shopdi.app")
+    }
+    else if(device === 'ios'){
+      window.open("https://apps.apple.com/us/app/shopdi/id1625578140")
+    }
+    else{
+      window.open("https://shopdi.com.vn")
+    }
+     
   }
+
   useEffect(() => {
     const affCodeTemp = localStorage.getItem('shopdi-connect');
     const voucherTemp = localStorage.getItem('voucherCode');

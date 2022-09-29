@@ -5,7 +5,7 @@ export const getMobileOS = () => {
     }
     else if ((/iPad|iPhone|iPod/.test(ua))
        || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)){
-      return "iod"
+      return "ios"
     }
     return "other"
   }
