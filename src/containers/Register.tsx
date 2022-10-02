@@ -1,14 +1,13 @@
-
-import Icon from '../components/Icon';
-import LayoutWrapLogin from '../components/wrapLogin';
-import ConfirmPassword from '../components/ConfirmPassword';
-import { useFormik } from 'formik';
-import React, { useEffect, useRef, useState } from 'react';
-import { ReactFacebookLoginInfo } from 'react-facebook-login';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import GoogleLogin from 'react-google-login';
-import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
-import 'react-phone-number-input/style.css';
+import Icon from "../components/Icon";
+import LayoutWrapLogin from "../components/wrapLogin";
+import ConfirmPassword from "../components/ConfirmPassword";
+import { useFormik } from "formik";
+import React, { useEffect, useRef, useState } from "react";
+import { ReactFacebookLoginInfo } from "react-facebook-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import GoogleLogin from "react-google-login";
+import PhoneInput, { parsePhoneNumber } from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import {
   confirmPinCodeCodeByPhone,
   confirmPinOTPByPhone,
@@ -18,21 +17,21 @@ import {
   registerSocialConfirmOtpServices,
   loginBySocialServices,
   registerSocialActiveServices,
-} from '../services/authencation';
-import * as yup from 'yup';
-import 'yup-phone';
-import OTPForm from '../components/OTPForm';
-import Success from '../components/Success';
-import FormPopup from '../components/FormPopup';
-import { useNavigate,useSearchParams } from 'react-router-dom';
-import logo from '../asset/logo.png'
-import {getMobileOS} from '../utils/getDevided';
+} from "../services/authencation";
+import * as yup from "yup";
+import "yup-phone";
+import OTPForm from "../components/OTPForm";
+import Success from "../components/Success";
+import FormPopup from "../components/FormPopup";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import logo from "../asset/logo.png";
+import { getMobileOS } from "../utils/getDevided";
 
 const validationSchema = yup.object({
-  phone: yup.string().phone('VN').required('Bạn chưa nhập số điện thoại'),
+  phone: yup.string().phone("VN").required("Bạn chưa nhập số điện thoại"),
 });
 export const validationPhoneSchema = yup.object({
-  phone: yup.string().phone('VN').required('Bạn chưa nhập số điện thoại'),
+  phone: yup.string().phone("VN").required("Bạn chưa nhập số điện thoại"),
 });
 
 const RegisterContainer: React.FC = () => {
@@ -40,72 +39,86 @@ const RegisterContainer: React.FC = () => {
   const router = useNavigate();
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [addPhone, setAddPhone] = useState(false);
   const [addOtp, setAddOtp] = useState(false);
-  const [pinCode, setPinCode] = useState('');
+  const [pinCode, setPinCode] = useState("");
   const [isPinCodeValid, setIsPinCodeValid] = useState(true);
-  const [accessToken, seAccessToken] = useState('');
+  const [accessToken, seAccessToken] = useState("");
   const [typeLogin, setTypeLogin] = useState(0);
-  const [token, setToken] = useState('');
-  const [refreshToken, setRefreshToken] = useState('');
-  const [affCode, setAffCode] = useState('');
-  const [voucher, setVoucher] = useState('');
-  const [device, setDevice] = useState('');
+  const [token, setToken] = useState("");
+  const [refreshToken, setRefreshToken] = useState("");
+  const [affCode, setAffCode] = useState("");
+  const [voucher, setVoucher] = useState("");
+  const [device, setDevice] = useState("");
 
   let [searchParams] = useSearchParams();
-    useEffect(() => {
-    const sdiaf = searchParams.get('affcode');
-    const voucherCode = searchParams.get('vocuhercode');
+  useEffect(() => {
+    const sdiaf = searchParams.get("affcode");
+    const voucherCode = searchParams.get("vocuhercode");
     if (sdiaf) {
-      localStorage.setItem('shopdi-connect', String(sdiaf));
+      localStorage.setItem("shopdi-connect", String(sdiaf));
     }
-    if(voucherCode){
-      localStorage.setItem('voucherCode', String(voucherCode));
+    if (voucherCode) {
+      localStorage.setItem("voucherCode", String(voucherCode));
     }
-  }, [searchParams])
+  }, [searchParams]);
 
   const loginSuccess = (token: string, refresh_token: string) => {
-
-    if(device === 'android'){
-      window.open("https://play.google.com/store/apps/details?id=io.shopdi.app")
+    if (device === "android") {
+      window.open(
+        "https://play.google.com/store/apps/details?id=io.shopdi.app"
+      );
+    } else if (device === "ios") {
+      window.open("https://apps.apple.com/us/app/shopdi/id1625578140");
+    } else {
+      window.open("https://shopdi.com.vn");
     }
-    else if(device === 'ios'){
-      window.open("https://apps.apple.com/us/app/shopdi/id1625578140")
-    }
-    else{
-      window.open("https://shopdi.com.vn")
-    }
-     
-  }
+  };
 
   useEffect(() => {
-    const affCodeTemp = localStorage.getItem('shopdi-connect');
-    const voucherTemp = localStorage.getItem('voucherCode');
+    const affCodeTemp = localStorage.getItem("shopdi-connect");
+    const voucherTemp = localStorage.getItem("voucherCode");
     if (affCodeTemp) {
       setAffCode(affCodeTemp);
     }
-    if(voucherTemp){
-      setVoucher(voucherTemp)
+    if (voucherTemp) {
+      setVoucher(voucherTemp);
     }
   }, []);
 
+  useEffect(() =>{
+   
+    if (device === "android"){
+      // setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=io.shopdi.app" as Location | (string & Location); }, 25);
+      window.location = "intent:#Intent;action=your.example.youtube.CUSTOMACTION;package=your.example.youtube;component=your.example.youtube/.YourActivity;S.extraValueName=WOW;end" as Location | (string & Location);
+      return;
+    }
+    // else if (device === "ios") {
+    //   setTimeout(function () { window.location = "https://apps.apple.com/us/app/shopdi/id1625578140" as Location | (string & Location); }, 25);
+    //   window.location = "appname://" as Location | (string & Location);
+    //   return;
+    // } else {
+    //   window.open("https://shopdi.com.vn");
+    // }
+  },[device])
+
   const formikAddPhone = useFormik({
     initialValues: {
-      phone: '',
-      shortPhone: '+84',
+      phone: "",
+      shortPhone: "+84",
     },
     validationSchema: validationPhoneSchema,
     onSubmit: async () => {
       setIsLoading(true);
       setIsPinCodeValid(true);
-      setPinCode('');
-      setError('');
+      setPinCode("");
+      setError("");
       const number = parsePhoneNumber(formikAddPhone.values.phone);
       try {
         const data = await registerSocialGetOtpServices({
           phone: formikAddPhone.values.phone,
-          regionCode: number?.country ?? 'VN',
+          regionCode: number?.country ?? "VN",
           access_token: accessToken,
           type: typeLogin,
         });
@@ -126,18 +139,18 @@ const RegisterContainer: React.FC = () => {
   const formik = useFormik({
     validationSchema,
     initialValues: {
-      phone: '',
-      shortPhone: '+84',
+      phone: "",
+      shortPhone: "+84",
     },
     onSubmit: async (values) => {
       setTypeLogin(0);
       const number = parsePhoneNumber(values.phone);
-      setError('');
+      setError("");
       setIsLoading(true);
       try {
         const data = await signupByPhone({
           phone: values.phone,
-          regionCode: number?.country ?? 'VN',
+          regionCode: number?.country ?? "VN",
         });
         setIsLoading(false);
         if (data.data.status) {
@@ -153,13 +166,13 @@ const RegisterContainer: React.FC = () => {
   });
 
   const checkPinCode = async () => {
-    setError('');
+    setError("");
     setIsLoading(true);
     const number = parsePhoneNumber(formik.values.phone);
     const data = await confirmPinOTPByPhone({
       phone: formik.values.phone,
       code: pinCode,
-      regionCode: number?.country || '',
+      regionCode: number?.country || "",
     });
 
     setIsLoading(false);
@@ -174,12 +187,12 @@ const RegisterContainer: React.FC = () => {
 
   const checkPinCodeSocial = async () => {
     try {
-      setError('');
+      setError("");
       setIsLoading(true);
       const number = parsePhoneNumber(formikAddPhone.values.phone);
       const data = await registerSocialConfirmOtpServices({
         phone: formikAddPhone.values.phone,
-        regionCode: number?.country ?? 'VN',
+        regionCode: number?.country ?? "VN",
         access_token: accessToken,
         type: typeLogin,
         code: pinCode,
@@ -200,11 +213,11 @@ const RegisterContainer: React.FC = () => {
 
   const requestOTpSocial = async () => {
     try {
-      setError('');
+      setError("");
       const number = parsePhoneNumber(formikAddPhone.values.phone);
       const data = await registerSocialGetOtpServices({
         phone: formikAddPhone.values.phone,
-        regionCode: number?.country ?? 'VN',
+        regionCode: number?.country ?? "VN",
         access_token: accessToken,
         type: typeLogin,
       });
@@ -222,14 +235,14 @@ const RegisterContainer: React.FC = () => {
   const handlePinChange = (pinCode: string) => {
     setPinCode(pinCode);
     setIsPinCodeValid(true);
-    setError('');
+    setError("");
   };
   const requestOTp = async () => {
     const number = parsePhoneNumber(formik.values.phone);
 
     const data = await signupByPhone({
       phone: formik.values.phone,
-      regionCode: number?.country ?? 'VN',
+      regionCode: number?.country ?? "VN",
     });
 
     if (!data.data.status) {
@@ -238,7 +251,7 @@ const RegisterContainer: React.FC = () => {
   };
 
   const onCreatePinCode = async (code: string) => {
-    setError('');
+    setError("");
     setIsLoading(true);
 
     if (typeLogin === 0) {
@@ -246,9 +259,9 @@ const RegisterContainer: React.FC = () => {
       const data = await confirmPinCodeCodeByPhone({
         phone: formik.values.phone,
         password: code,
-        regionCode: number?.country ?? 'VN',
+        regionCode: number?.country ?? "VN",
         presenterCode: affCode,
-        voucherCode:voucher,
+        voucherCode: voucher,
       });
 
       setIsLoading(false);
@@ -265,11 +278,11 @@ const RegisterContainer: React.FC = () => {
         access_token: accessToken,
         type: typeLogin,
         phone: formikAddPhone.values.phone,
-        regionCode: number?.country ?? 'VN',
+        regionCode: number?.country ?? "VN",
         code: pinCode,
         password: code,
         presenterCode: affCode,
-        voucherCode:voucher,
+        voucherCode: voucher,
       });
 
       setIsLoading(false);
@@ -285,20 +298,20 @@ const RegisterContainer: React.FC = () => {
 
   const onChangeShortPhoneInput = (e: any) => {
     if (!addPhone) {
-      formik.setFieldValue('shortPhone', e);
+      formik.setFieldValue("shortPhone", e);
     } else {
-      formikAddPhone.setFieldValue('shortPhone', e);
+      formikAddPhone.setFieldValue("shortPhone", e);
     }
   };
   const onChangePhoneInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setError('');
+    setError("");
     if (!addPhone) {
-      formik.setFieldValue('phone', `${formik.values.shortPhone}${value}`);
+      formik.setFieldValue("phone", `${formik.values.shortPhone}${value}`);
     } else {
       formikAddPhone.setFieldValue(
-        'phone',
-        `${formik.values.shortPhone}${value}`,
+        "phone",
+        `${formik.values.shortPhone}${value}`
       );
     }
   };
@@ -310,7 +323,7 @@ const RegisterContainer: React.FC = () => {
     if (!response.accessToken) {
       return;
     }
-    setError('');
+    setError("");
     setIsLoading(true);
     try {
       const data = await registerSocialServices({
@@ -334,7 +347,7 @@ const RegisterContainer: React.FC = () => {
 
   const responseGoogle = async (response: any) => {
     if (response.accessToken) {
-      setError('');
+      setError("");
       setIsLoading(true);
       try {
         const data = await registerSocialServices({
@@ -363,12 +376,12 @@ const RegisterContainer: React.FC = () => {
     }
   }, []);
 
-  useEffect(()=>{
-    setDevice(getMobileOS())
-  },[])
+  useEffect(() => {
+    setDevice(getMobileOS());
+  }, []);
 
   const loginExitAccount = async () => {
-    setError('');
+    setError("");
     setIsLoading(true);
     try {
       const data = await loginBySocialServices({
@@ -407,8 +420,8 @@ const RegisterContainer: React.FC = () => {
                 className={`input-phone ${
                   formikAddPhone.touched.phone &&
                   Boolean(formikAddPhone.errors.phone)
-                    ? 'error-input'
-                    : ''
+                    ? "error-input"
+                    : ""
                 }`}
               >
                 <PhoneInput
@@ -429,9 +442,9 @@ const RegisterContainer: React.FC = () => {
               {formikAddPhone.touched.phone &&
                 Boolean(formikAddPhone.errors.phone) && (
                   <div className="text-red mt-2 font-size13">
-                    {formikAddPhone.values.phone === ''
+                    {formikAddPhone.values.phone === ""
                       ? "Bạn quên nhập số điện thoại"
-                      : 'Bạn quên nhập số điện thoại'}
+                      : "Bạn quên nhập số điện thoại"}
                   </div>
                 )}
             </div>
@@ -465,17 +478,17 @@ const RegisterContainer: React.FC = () => {
           />
         </FormPopup>
       )}
-      <div className='d-flex justify-content-center'>
-      <img src={logo} alt='logo' className='logo'/>
+      <div className="d-flex justify-content-center">
+        <img src={logo} alt="logo" className="logo" />
       </div>
 
       <div className="title heading-2">
         {step === 3
-          ? 'Tạo Mật Khẩu Mới'
+          ? "Tạo Mật Khẩu Mới"
           : step === 1
           ? "Đăng ký"
           : step === 4
-          ? ''
+          ? ""
           : "XÁC NHẬN MÃ PIN"}
       </div>
       <div className="login-wrap">
@@ -485,8 +498,8 @@ const RegisterContainer: React.FC = () => {
               <div
                 className={`input-phone ${
                   formik.touched.phone && Boolean(formik.errors.phone)
-                    ? 'error-input'
-                    : ''
+                    ? "error-input"
+                    : ""
                 }`}
               >
                 <PhoneInput
@@ -506,9 +519,9 @@ const RegisterContainer: React.FC = () => {
               </div>
               {formik.touched.phone && Boolean(formik.errors.phone) && (
                 <div className="text-red mt-2 font-size13">
-                  {formik.values.phone === ''
+                  {formik.values.phone === ""
                     ? "Bạn quên nhập số điện thoại"
-                    : 'Bạn quên nhập số điện thoại'}
+                    : "Bạn quên nhập số điện thoại"}
                 </div>
               )}
             </div>
@@ -520,14 +533,14 @@ const RegisterContainer: React.FC = () => {
             )}
 
             {error ===
-              'Tài khoản này đã liên kết với một tài khoản Shopdi. Bạn có muốn đăng nhập vào tài khoản này?' && (
+              "Tài khoản này đã liên kết với một tài khoản Shopdi. Bạn có muốn đăng nhập vào tài khoản này?" && (
               <button
                 type="button"
                 className="button button-primary size-l w-100 mt-5"
                 onClick={loginExitAccount}
                 disabled={isLoading}
               >
-                {isLoading ? 'Đang xử lý' : 'Đăng nhập'}
+                {isLoading ? "Đang xử lý" : "Đăng nhập"}
               </button>
             )}
 
@@ -537,18 +550,19 @@ const RegisterContainer: React.FC = () => {
               onClick={() => formik.handleSubmit()}
               disabled={isLoading}
             >
-      
-              {isLoading ? 'Đang xử lý' : 'Đăng ký'}
-        
+              {isLoading ? "Đang xử lý" : "Đăng ký"}
             </button>
             <div className="d-flex align-items-center justify-content-center mt-4">
               <span className="text-gray2">
-              Đồng ý với&nbsp;
-   
-                  <a className="text-blue cursor-pointer" target="_blank" href="https://golive.shopdi.com.vn/dieu-khoan-dich-vu" rel="noreferrer">
-                    <u>Điều khoản dịch vụ</u>
-                  </a>
-      
+                Đồng ý với&nbsp;
+                <a
+                  className="text-blue cursor-pointer"
+                  target="_blank"
+                  href="https://golive.shopdi.com.vn/dieu-khoan-dich-vu"
+                  rel="noreferrer"
+                >
+                  <u>Điều khoản dịch vụ</u>
+                </a>
               </span>
             </div>
             {/* <div className="d-flex mt-5 mb-3 justify-content-center">
@@ -596,12 +610,14 @@ const RegisterContainer: React.FC = () => {
             </div> */}
             <div className="mt-5 text-center">
               <span className="text-gray2">Bạn đã có tài khoản?</span>&nbsp;
-              
-                <div className="text-blue cursor-pointer" onClick={() => router("/login")}>
-                  <span>Đăng nhập</span>
-                </div>
-            
+              <div
+                className="text-blue cursor-pointer"
+                onClick={() => router("/login")}
+              >
+                <span>Đăng nhập</span>
+              </div>
             </div>
+            <a href="intent:#Intent;action=your.example.youtube.CUSTOMACTION;package=your.example.youtube;component=your.example.youtube/.YourActivity;S.extraValueName=WOW;end">Open App</a>
           </div>
         )}
         {step === 2 && (

@@ -131,7 +131,7 @@ export const confirmOTPForgotPassword = (params: {
     method: 'GET',
     params,
   });
-
+  
 export const confirmForgotPassword = (params: {
   key: string;
   phone: string;
