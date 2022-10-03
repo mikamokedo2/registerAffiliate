@@ -55,7 +55,7 @@ const RegisterContainer: React.FC = () => {
   let [searchParams] = useSearchParams();
   useEffect(() => {
     const sdiaf = searchParams.get("affcode");
-    const voucherCode = searchParams.get("vocuhercode");
+    const voucherCode = searchParams.get("vouchercode");
     if (sdiaf) {
       localStorage.setItem("shopdi-connect", String(sdiaf));
     }
