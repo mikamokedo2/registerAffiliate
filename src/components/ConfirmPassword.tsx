@@ -65,21 +65,16 @@ const ConfirmPassword: React.FC<ConfirmPassword> = ({
       <div className="password-field">
         <InputCustom
           className="w-100 font-size16 input-login"
-          type={showPass ? 'text' : 'password'}
           placeholder="Nhập mật khẩu"
           onChange={formik.handleChange}
           name="password"
           error={formik.touched.password && Boolean(formik.errors.password)}
           message={formik.touched.password && formik.errors.password}
         />
-        <div className="icon-view-pass" onClick={() => setShowPass(!showPass)}>
-          <Icon name={showPass ? 'eye' : 'eye-block'} />
-        </div>
       </div>
       <div className="password-field">
         <InputCustom
           className="w-100 font-size16 input-login"
-          type={showPass ? 'text' : 'password'}
           placeholder="Nhập lại mật khẩu"
           onChange={formik.handleChange}
           name="confirmPassword"
@@ -91,9 +86,6 @@ const ConfirmPassword: React.FC<ConfirmPassword> = ({
             formik.touched.confirmPassword && formik.errors.confirmPassword
           }
         />
-        <div className="icon-view-pass" onClick={() => setShowPass(!showPass)}>
-          <Icon name={showPass ? 'eye' : 'eye-block'} />
-        </div>
       </div>
 
       {error && (

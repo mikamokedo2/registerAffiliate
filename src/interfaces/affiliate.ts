@@ -7,6 +7,13 @@ export interface PackageAffiliateEntity {
     profit: number;
     active: boolean;
   }
+
+  interface Referral{
+  phoneNumber: string;
+  walletCode: string;
+  affCode: string;
+  total: number;
+  }
   
   export interface MyAffiliateInfo {
     packageId: string;
@@ -16,14 +23,20 @@ export interface PackageAffiliateEntity {
     packageProfit: number;
     affCode: number;
     linkRef: string;
-    totalProfit: number;
-    topProfit: number;
     presenterCode: string;
+    profitF1: number;
+    profitF2: number;
+    totalRefernal: number;
+    totalProfit: number;
+    totalProfitHour: number;
+    topRefernal:Referral[];
+    topProfit:Referral[];
   }
   
   export interface AffiliateTransactionEntity {
-    test: any;
-    id: string;
+    phoneNumber: string;
+    profit: number;
+    createDate: string;
   }
   
   export interface AffiliateReferralHistoryEntity {

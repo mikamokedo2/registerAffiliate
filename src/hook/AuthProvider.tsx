@@ -3,10 +3,11 @@ import { getUserProfileServices, IAuthRequestSignIn, loginWithUserPass } from '.
 import { ACCESS_TOKEN_KEY } from '../utils/constant';
 import { useNavigate,useLocation } from "react-router-dom";
 import { UserEntity } from '../interfaces/user';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import jwtDecode from 'jwt-decode';
 import { fromUnixTime } from 'date-fns';
-import { url } from '../services/request';
+import request, { url } from '../services/request';
+import Loader from '../components/Loading';
 
 
 interface ContextType{
@@ -33,6 +34,7 @@ export const CheckLoggedUser = () => {
 export const INIT_PAGE = [
   '/login',
   '/',
+  '/home',
 ];
 
 interface AuthProviderProps{
@@ -63,6 +65,7 @@ try {
     const authFunction = async () => {
       const token = localStorage.getItem('_u');
       const refreshToken = localStorage.getItem('_uRefresh');
+      setLoading(true);
       if (!token) {
         if (!INIT_PAGE.includes(location.pathname)) {
           Router('/login');
@@ -74,6 +77,18 @@ try {
         if (expired.getTime() > new Date().getTime()) {
           setLoading(false);
           if (!user) {
+            request.interceptors.request.use(
+              (config: AxiosRequestConfig<string>) => {
+                const token = localStorage.getItem('_u');
+                if (config && config.headers) {
+                  config.headers.Authorization = `Bearer ${token}`;
+                }
+                return config;
+              },
+              (error: string) => {
+                throw error;
+              },
+            );
             getData();
           }
           if (['/login', '/register'].includes(location.pathname)) {
@@ -122,7 +137,7 @@ try {
     };
   }, [user]);
 
-  return <AuthContext.Provider value={params}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={params}>{loading ? <Loader loadingStatus={loading}/> : children}</AuthContext.Provider>;
 }
 
 export default AuthProvider;

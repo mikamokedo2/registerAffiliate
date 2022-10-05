@@ -113,7 +113,8 @@ export type IconName =
   | 'group-user'
   | 'icon-xu'
   | 'copy-black'
-  |'copy-paper';
+  |'copy-paper'
+  | 'checked-icon';
 
 const Svg = (props: { name: IconName }) => {
   switch (props.name) {
@@ -3584,7 +3585,20 @@ const Svg = (props: { name: IconName }) => {
             </defs>
             </svg>
             )
+            case "checked-icon":
+            return(
+              <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_793_4978)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M8.50003 16C12.9113 16 16.5 12.411 16.5 7.99993C16.5 3.58893 12.9113 -9.91821e-05 8.50003 -9.91821e-05C4.08881 -9.91821e-05 0.5 3.58893 0.5 7.99993C0.5 12.411 4.08881 16 8.50003 16ZM13.0225 6.04771L7.90606 11.1641C7.74531 11.3249 7.52728 11.4153 7.29997 11.4153C7.07266 11.4153 6.85463 11.3249 6.69391 11.1641L3.97747 8.44774C3.64294 8.11321 3.64284 7.57015 3.97756 7.23568C4.31234 6.90118 4.85494 6.90109 5.18962 7.23574L7.29997 9.3459L11.8103 4.83577C12.145 4.50112 12.6877 4.50118 13.0224 4.83571C13.357 5.17018 13.3571 5.71315 13.0225 6.04771Z" fill="#3366FF"/>
+</g>
+<defs>
+<clipPath id="clip0_793_4978">
+<rect width="16" height="16" fill="white" transform="translate(0.5)"/>
+</clipPath>
+</defs>
+</svg>
 
+            )
     default:
       return null;
   }

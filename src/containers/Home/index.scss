@@ -1,0 +1,74 @@
+#home-page{
+    background-color: #222631;
+    color:#fff;
+    .home-inner{
+        display: flex;
+    }
+    .left-size{
+        width: 50%;
+    }
+    .right-size{
+        width: 50%;
+    }
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+        color: #FDD116;
+    }
+    .ant-tabs-ink-bar{
+        background: #FDD116;
+    }
+    .ant-tabs-tab-btn{
+        color:#fff;
+    font-size: 16px;
+    font-weight: 700;
+    padding:0px 16px;
+    }
+    .tab{
+   margin-top:120px;
+    }
+    .ant-tabs-tab{
+     
+ 
+    }
+    .ant-tabs-tab + .ant-tabs-tab{
+        margin:0px;
+    }
+    .title-downapp{
+        font-weight: 500;
+font-size: 16px;
+line-height: 140%;
+text-align: center;
+margin-top: 50px;
+    }
+    .ant-tabs{
+        color:#fff;
+    }
+    .qr-code{
+        width: 240px;
+        height: 240px;
+        margin-top: 32px;
+        svg{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .wrap-have-account{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer-bottom{
+        padding:15px;
+        font-weight: 500;
+font-size: 12px;
+line-height: 140%;
+letter-spacing: -0.2px;
+border-top: 1px solid #FFFFFF;
+margin-top:32px;
+    }
+    .ant-tabs-top > .ant-tabs-nav::before, .ant-tabs-bottom > .ant-tabs-nav::before, .ant-tabs-top > div > .ant-tabs-nav::before, .ant-tabs-bottom > div > .ant-tabs-nav::before{
+        border-bottom:none;
+    }
+    .ant-tabs-tab{
+        border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+    }
+}

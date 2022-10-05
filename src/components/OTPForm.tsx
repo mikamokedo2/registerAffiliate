@@ -32,6 +32,7 @@ const StyledWrap = styled.div`
   .reactCodeInput {
     input {
       text-align: center;
+      color: #000;
     }
   }
 `;
@@ -95,7 +96,7 @@ const OTPForm: React.FC<OTPFormForm> = ({
         )}
         <div className="mt-5 text-center">
           <span
-            className={countDown > 0 ? 'text-gray2 cursor-pointer' : 'text-blue cursor-pointer'}
+            className={countDown > 0 ? 'cursor-pointer' : 'cursor-pointer'}
 
             onClick={() => {
               setCountDown(60);

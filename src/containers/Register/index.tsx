@@ -58,6 +58,7 @@ const RegisterContainer: React.FC = () => {
   let [searchParams] = useSearchParams();
   useEffect(() => {
     const sdiaf = searchParams.get("affcode");
+    console.log(sdiaf);
     const voucherCode = searchParams.get("vouchercode");
     if (sdiaf) {
       localStorage.setItem("shopdi-connect", String(sdiaf));
@@ -77,11 +78,11 @@ const RegisterContainer: React.FC = () => {
     // } else {
     //   window.open("https://shopdi.com.vn");
     // }
-    localStorage.setItem('_u', token);
-    localStorage.setItem('_uRefresh', refreshToken);
+    localStorage.setItem("_u", token);
+    localStorage.setItem("_uRefresh", refreshToken);
     request.interceptors.request.use(
       (config: AxiosRequestConfig<string>) => {
-        const token = localStorage.getItem('_u');
+        const token = localStorage.getItem("_u");
         if (config && config.headers) {
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -89,7 +90,7 @@ const RegisterContainer: React.FC = () => {
       },
       (error: string) => {
         throw error;
-      },
+      }
     );
     router("/dashboard");
   };
@@ -105,11 +106,13 @@ const RegisterContainer: React.FC = () => {
     }
   }, []);
 
-  useEffect(() =>{
-   
-    if (device === "android"){
+  useEffect(() => {
+    if (device === "android") {
       // setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=io.shopdi.app" as Location | (string & Location); }, 25);
-      window.location = "intent:#Intent;action=your.example.youtube.CUSTOMACTION;package=your.example.youtube;component=your.example.youtube/.YourActivity;S.extraValueName=WOW;end" as Location | (string & Location);
+      window.location =
+        "intent:#Intent;action=your.example.youtube.CUSTOMACTION;package=your.example.youtube;component=your.example.youtube/.YourActivity;S.extraValueName=WOW;end" as
+          | Location
+          | (string & Location);
       return;
     }
     // else if (device === "ios") {
@@ -119,7 +122,7 @@ const RegisterContainer: React.FC = () => {
     // } else {
     //   window.open("https://shopdi.com.vn");
     // }
-  },[device])
+  }, [device]);
 
   const formikAddPhone = useFormik({
     initialValues: {
@@ -497,94 +500,95 @@ const RegisterContainer: React.FC = () => {
         </FormPopup>
       )}
       <div className="mobile-view">
-      <div className="d-flex justify-content-center">
-        <img src={logo} alt="logo" className="logo" />
-      </div>
+        <div className="title heading-2">
+          {step === 3
+            ? "Tạo Mật Khẩu Mới"
+            : step === 1
+            ? "Đăng ký"
+            : step === 4
+            ? ""
+            : "XÁC NHẬN MÃ PIN"}
+        </div>
 
-      <div className="title heading-2">
-        {step === 3
-          ? "Tạo Mật Khẩu Mới"
-          : step === 1
-          ? "Đăng ký"
-          : step === 4
-          ? ""
-          : "XÁC NHẬN MÃ PIN"}
-      </div>
-      <div className="login-wrap">
-        {step === 1 && (
-          <div>
-            <div className="">
-              <div
-                className={`input-phone ${
-                  formik.touched.phone && Boolean(formik.errors.phone)
-                    ? "error-input"
-                    : ""
-                }`}
-              >
-                <PhoneInput
-                  defaultCountry="VN"
-                  value={formik.values.shortPhone}
-                  onChange={onChangeShortPhoneInput}
-                  international
-                  name="shortPhone"
-                  ref={shortPhoneRef}
-                />
-                <input
-                  name="phone"
-                  placeholder="Nhập số điện thoại"
-                  className="input-short"
-                  onChange={onChangePhoneInput}
-                />
+        <div className="login-wrap">
+          {step === 1 && (
+            <div>
+              <div className="body-04">
+                Vui lòng nhập số điện thoại để bắt đầu đăng ký tài khoản
               </div>
-              {formik.touched.phone && Boolean(formik.errors.phone) && (
-                <div className="text-red mt-2 font-size13">
-                  {formik.values.phone === ""
-                    ? "Bạn quên nhập số điện thoại"
-                    : "Bạn quên nhập số điện thoại"}
+              <div className="phone-input-main">
+                <div
+                  className={`input-phone ${
+                    formik.touched.phone && Boolean(formik.errors.phone)
+                      ? "error-input"
+                      : ""
+                  }`}
+                >
+                  <PhoneInput
+                    defaultCountry="VN"
+                    value={formik.values.shortPhone}
+                    onChange={onChangeShortPhoneInput}
+                    international
+                    name="shortPhone"
+                    ref={shortPhoneRef}
+                  />
+                  <input
+                    name="phone"
+                    placeholder="Nhập số điện thoại"
+                    className="input-short"
+                    onChange={onChangePhoneInput}
+                  />
+                </div>
+                {formik.touched.phone && Boolean(formik.errors.phone) && (
+                  <div className="text-red mt-2 font-size13">
+                    {formik.values.phone === ""
+                      ? "Bạn quên nhập số điện thoại"
+                      : "Bạn quên nhập số điện thoại"}
+                  </div>
+                )}
+              </div>
+
+              {error && (
+                <div className="text-red mt-2 font-size13 text-center">
+                  {error}
                 </div>
               )}
-            </div>
 
-            {error && (
-              <div className="text-red mt-2 font-size13 text-center">
-                {error}
-              </div>
-            )}
+              {error ===
+                "Tài khoản này đã liên kết với một tài khoản Shopdi. Bạn có muốn đăng nhập vào tài khoản này?" && (
+                <button
+                  type="button"
+                  className="button button-primary size-l w-100 mt-5"
+                  onClick={loginExitAccount}
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Đang xử lý" : "Đăng nhập"}
+                </button>
+              )}
 
-            {error ===
-              "Tài khoản này đã liên kết với một tài khoản Shopdi. Bạn có muốn đăng nhập vào tài khoản này?" && (
               <button
                 type="button"
-                className="button button-primary size-l w-100 mt-5"
-                onClick={loginExitAccount}
+                className="button button-primary size-l w-100 mtt-5"
+                onClick={() => formik.handleSubmit()}
                 disabled={isLoading}
               >
-                {isLoading ? "Đang xử lý" : "Đăng nhập"}
+                {isLoading ? "Đang xử lý" : "Đăng ký"}
               </button>
-            )}
-
-            <button
-              type="button"
-              className="button button-primary size-l w-100 mt-5"
-              onClick={() => formik.handleSubmit()}
-              disabled={isLoading}
-            >
-              {isLoading ? "Đang xử lý" : "Đăng ký"}
-            </button>
-            <div className="d-flex align-items-center justify-content-center mt-4">
-              <span className="text-gray2">
-                Đồng ý với&nbsp;
-                <a
-                  className="text-blue cursor-pointer"
-                  target="_blank"
-                  href="https://golive.shopdi.com.vn/dieu-khoan-dich-vu"
-                  rel="noreferrer"
-                >
-                  <u>Điều khoản dịch vụ</u>
-                </a>
-              </span>
-            </div>
-            {/* <div className="d-flex mt-5 mb-3 justify-content-center">
+              <div className="mt-4 d-flex flex-column align-items-center">
+                <span className="">Bằng việc tiếp tục, bạn đã đồng ý với</span>
+                <div>
+                  <a
+                    className="text-blue cursor-pointer"
+                    target="_blank"
+                    href="https://golive.shopdi.com.vn/dieu-khoan-dich-vu"
+                    rel="noreferrer"
+                  >
+                    <Icon name="checked-icon" />
+                    <u>Điều khoản và điều kiện của Shopdi</u>
+                  </a>
+                </div>
+              </div>
+              {/* <div className="d-flex mt-5 mb-3 justify-content-center">
               <div className="text-or">Đăng nhập bằng cách khác</div>
             </div>
             <div className="d-flex justify-content-center">
@@ -627,7 +631,7 @@ const RegisterContainer: React.FC = () => {
                 xfbml
               />
             </div> */}
-            <div className="mt-5 text-center mb-5">
+              {/* <div className="mt-5 text-center mb-5">
               <span className="text-gray2">Bạn đã có tài khoản?</span>&nbsp;
               <div
                 className="text-blue cursor-pointer"
@@ -635,33 +639,33 @@ const RegisterContainer: React.FC = () => {
               >
                 <span>Đăng nhập</span>
               </div>
+            </div> */}
             </div>
-          </div>
-        )}
-        {step === 2 && (
-          <OTPForm
-            phone={formik.values.phone}
-            isEmail={false}
-            isPinCodeValid={isPinCodeValid}
-            pinCode={pinCode}
-            handlePinChange={handlePinChange}
-            checkPinCode={checkPinCode}
-            requestNewCode={requestOTp}
-            isLoading={isLoading}
-            error={error}
-          />
-        )}
-        {step === 3 && (
-          <ConfirmPassword
-            onSubmit={onCreatePinCode}
-            type="register"
-            isLoading={isLoading}
-            error={error}
-          />
-        )}
-        {step === 4 && <Success isRegister onBack={onBack} />}
-      </div>
-      <Footer />
+          )}
+          {step === 2 && (
+            <OTPForm
+              phone={formik.values.phone}
+              isEmail={false}
+              isPinCodeValid={isPinCodeValid}
+              pinCode={pinCode}
+              handlePinChange={handlePinChange}
+              checkPinCode={checkPinCode}
+              requestNewCode={requestOTp}
+              isLoading={isLoading}
+              error={error}
+            />
+          )}
+          {step === 3 && (
+            <ConfirmPassword
+              onSubmit={onCreatePinCode}
+              type="register"
+              isLoading={isLoading}
+              error={error}
+            />
+          )}
+          {step === 4 && <Success isRegister onBack={onBack} />}
+        </div>
+        {/* <Footer /> */}
       </div>
     </LayoutWrapLogin>
   );

@@ -1,16 +1,13 @@
 .wrap-login{
-  min-height: 100vh;
   .login-content {
-    background: #ffffff;
+    // background: #ffffff;
     // box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
     border-radius: 8px;
     padding:40px 15px 0 15px;
     width: 100%;
   }
   .title {
-
     text-align: center;
-    margin-bottom: 30px;
     text-transform: uppercase;
   }
   .login-wrap {
@@ -99,6 +96,7 @@
     width: 60px;
     line-height: 1em;
     font-weight: 700;
+    color:#000;
   }
   .PhoneInputInput:disabled {
     background: none;
@@ -117,6 +115,7 @@
     display: flex;
    align-items: center;
    border-radius: 8px;
+   background-color: #fff;
   }
   .input-phone.error-input{
     border: 1px solid red;
@@ -127,10 +126,12 @@
     padding-left: 10px;
     font-size: 16px;
     line-height: 1em;
+    color:#000
   }
   .input-login{
       padding:10px 10px;
       border-radius: 8px;
+      color: #000;
   }
   .border-bottom{
     border-bottom:1px solid #000000;
@@ -146,5 +147,8 @@
   }
   .relative{
     position: relative;
+  }
+  .phone-input-main{
+    margin-top:50px;
   }
 };

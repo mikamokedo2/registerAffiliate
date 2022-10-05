@@ -6,7 +6,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginContainer from './containers/Login';
 import AuthProvider from './hook/AuthProvider';
 import DashBoardContainer from './containers/Dashboard';
-
+import Home from './containers/Home';
+import 'antd/dist/antd.css';
 
 
 
@@ -20,11 +21,9 @@ function App() {
       <AuthProvider>
       <Routes>
 
-
       <Route path='/login' element={<LoginContainer />} />
       <Route path='/dashboard' element={<DashBoardContainer />} />
-      <Route index element={<RegisterContainer />} />
-
+      <Route index element={<Home />} />
 
       </Routes>
       </AuthProvider>

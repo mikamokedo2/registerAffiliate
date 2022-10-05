@@ -1,78 +1,162 @@
-import React,{useRef} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Icon from "../../components/Icon";
-import LayoutWrapLogin from "../../components/wrapLogin";
 import "./index.scss";
-import { QRCodeSVG } from 'qrcode.react';
-import ButtonCopy from '../../components/CopyButton'
+import { QRCodeSVG } from "qrcode.react";
+import ButtonCopy from "../../components/CopyButton";
 import Table from "../../components/Table";
+import {
+  getMyAffiliateInfoService,
+  getAffiliateTransactionService,
+  getAffiliateReferralHistoryService,
+} from "../../services/affiliate";
+import {
+  AffiliateReferralHistoryEntity,
+  AffiliateTransactionEntity,
+  MyAffiliateInfo,
+} from "../../interfaces/affiliate";
+import { exportToCSV } from "../../utils/constant";
+import TopUser from "../../components/TopUser";
 
-const columns = [    {
-  key: 'date',
-  dataIndex: 'date',
-  title: 'Ngày',
-  fixed: true,
-  width: '50%',
-  textWrap: 'word-break',
-},
-{
-  key: 'id',
-  dataIndex: 'id',
-  title: 'ID',
-  className: 'text-center',
-  width: '50%',
-},
-
-]
-
-const columns2 = [   
+const columns = [
   {
-    key: 'amount',
-    dataIndex: 'amount',
-    title: 'Xu thưởng',
-    className: 'text-center',
-    width: '50%',
-  }, {
-  key: 'date',
-  dataIndex: 'date',
-  title: 'Ngày',
-  fixed: true,
-  width: '50%',
-  textWrap: 'word-break',
-},
-{
-  key: 'id',
-  dataIndex: 'id',
-  title: 'ID',
-  className: 'text-center',
-  width: '50%',
-},
-
-]
-
-
-
-
-const dataSources = [
-  {
-    date: '10/06/2022',
-    id: '12345678',
-
+    key: "date",
+    dataIndex: "date",
+    title: "Ngày",
+    width: "50%",
+    textWrap: "word-break",
   },
   {
-    date: '10/06/2022',
-    id: '12345678',
+    key: "id",
+    dataIndex: "id",
+    title: "ID",
+    className: "text-center",
+    width: "50%",
+  },
+];
 
+const columns2 = [
+  {
+    key: "amount",
+    dataIndex: "amount",
+    title: "Xu thưởng",
+    className: "text-center",
   },
   {
-    date: '10/06/2022',
-    id: '12345678',
+    key: "date",
+    dataIndex: "date",
+    title: "Ngày",
 
+    textWrap: "word-break",
   },
-]
+  {
+    key: "id",
+    dataIndex: "id",
+    title: "ID",
+    className: "text-center",
+  },
+];
+
+
 
 const Dashboard = () => {
-  const refCode= useRef(null)
-  const linkCode= useRef(null)
+  const refCode = useRef(null);
+  const linkCode = useRef(null);
+  const [myAffiliate, setMyAffiliate] = useState<MyAffiliateInfo | null>(null);
+  const [transactions, setTransaction] = useState<AffiliateTransactionEntity[]>(
+    []
+  );
+  const [referrals, setReferrals] = useState<AffiliateReferralHistoryEntity[]>(
+    []
+  );
+  const [pageIndexTransaction, setPageIndexTransaction] = useState(1);
+  const [pageIndexReferral, setPageIndexReferral] = useState(1);
+  const [totalTransaction, setTotalTransaction] = useState(0);
+  const [totalReferral, setTotalReferral] = useState(0);
+  const [totalTransactionPage, setTotalTransactionPage] = useState(0);
+  const [totalReferralPage, setTotalReferralPage] = useState(0);
+
+  const fetchMyAffiliate = async () => {
+    try {
+      const result = await getMyAffiliateInfoService();
+      if (result.data.status) {
+        setMyAffiliate(result.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchTransactions = async () => {
+    try {
+      const result = await getAffiliateTransactionService({
+        pageIndex: pageIndexTransaction,
+        pageSize: 20,
+      });
+      console.log(result.data);
+      if (result.data.status) {
+        setTransaction(result.data.data);
+        setTotalTransaction(result.data.totalRecord ?? 1);
+        setTotalTransactionPage(result.data.totalPaging ?? 1);
+        console.log(result.data.status);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchReferral = async () => {
+    try {
+      const result = await getAffiliateReferralHistoryService({
+        pageIndex: pageIndexReferral,
+        pageSize: 20,
+      });
+      if (result.data.status) {
+        setReferrals(result.data.data);
+        setTotalReferral(result.data.totalRecord ?? 1);
+        setTotalReferralPage(result.data.totalPaging ?? 1);
+        console.log(result.data.status);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(myAffiliate);
+
+  useEffect(() => {
+    fetchMyAffiliate();
+  }, []);
+  useEffect(() => {
+    fetchTransactions();
+  }, [pageIndexTransaction]);
+
+  useEffect(() => {
+    fetchReferral();
+  }, [pageIndexReferral]);
+
+  const handleExportTransaction = async () => {
+    try {
+      const { data } = await getAffiliateTransactionService({
+        pageIndex: 1,
+        pageSize: totalTransaction,
+      });
+      exportToCSV(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleExportRefferal = async () => {
+    try {
+      const { data } = await getAffiliateReferralHistoryService({
+        pageIndex: 1,
+        pageSize: totalReferral,
+      });
+      exportToCSV(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div id="dashboard">
       <div className="banner">
@@ -120,130 +204,124 @@ const Dashboard = () => {
       </div>
       <div className="topten-wrap">
         <div className="top-ten-inner contabner">
-          <div className="topten-item">
-            <div className="mrt-2">
-              <img src="/img/platinum.png" />
-            </div>
-            <div className="mrt-5">
-              <div className="body-04">NO.1</div>
-              <div className="heading-06">ng****@gmail.com</div>
-            </div>
-            <div className="line" />
-            <div>
-              <div className="body-04">Tổng người</div>
-              <div className="d-flex align-items-center">
-                <div className="heading-06">10.000.000</div>
-                <div className="mlt-1 mbt-1">
-                  <Icon name="group-user" size={20} />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="topten-item">
-            <div className="mrt-2">
-              <img src="/img/platinum.png" />
-            </div>
-            <div className="mrt-5">
-              <div className="body-04">NO.1</div>
-              <div className="heading-06">ng****@gmail.com</div>
-            </div>
-            <div className="line" />
-            <div>
-              <div className="body-04">Tổng người</div>
-              <div className="d-flex align-items-center">
-                <div className="heading-06">10.000.000</div>
-                <div className="mlt-1 mbt-1">
-                  <Icon name="group-user" size={20} />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="topten-item">
-            <div className="mrt-2">
-              <img src="/img/platinum.png" />
-            </div>
-            <div className="mrt-5">
-              <div className="body-04">NO.1</div>
-              <div className="heading-06">ng****@gmail.com</div>
-            </div>
-            <div className="line" />
-            <div>
-              <div className="body-04">Tổng người</div>
-              <div className="d-flex align-items-center">
-                <div className="heading-06">10.000.000</div>
-                <div className="mlt-1 mbt-1">
-                  <Icon name="group-user" size={20} />
-                </div>
-              </div>
-            </div>
-          </div>
+          {myAffiliate?.topRefernal?.map((item, index) => (
+            <TopUser
+            key={item.walletCode}
+              amount={item.total}
+              index={index + 1}
+              icon={index === 0 ? "platinum" : index === 1 ? "gold" : "sliver"}
+              wallet={item.walletCode}
+            />
+          ))}
         </div>
       </div>
       <div className="statistic">
-      <div className="container">
-<div className="statistic-inner">
-<div className="statistic-item d-flex">
-          
-          <div className="item-first">
-            <div className="head-line04">Số bạn bè giới thiệu bạn bè</div>
-            <div className="heading-03 text-orange">10</div>
+        <div className="container">
+          <div className="statistic-inner">
+            <div className="statistic-item d-flex">
+              <div className="item-first">
+                <div className="head-line04">Số bạn bè giới thiệu bạn bè</div>
+                <div className="heading-03 text-orange">
+                  {myAffiliate?.totalRefernal}
+                </div>
+              </div>
+              <div>
+                <div className="head-line04">Ước tính giá trị thưởng</div>
+                <div className="heading-03 text-orange">
+                  {myAffiliate?.totalProfit}&nbsp;
+                  <Icon name="coin-small" size={20} />
+                </div>
+              </div>
+            </div>
+            <div className="statistic-item">
+              <div className="qr-code">
+                <QRCodeSVG value={myAffiliate?.linkRef ?? ""} />
+              </div>
+              <div className="statistic-item-right">
+                <div className="d-flex justify-content-between">
+                  <div className="d-flex align-items-center">
+                    <div className="head-line04 mrt-4">ID giới thiệu:</div>
+                    <div className="heading-06 mrt-1" ref={refCode}>
+                      {myAffiliate?.affCode}
+                    </div>
+                    <ButtonCopy element={refCode} />
+                  </div>
+                  <div>
+                    <div className="head-line04 d-flex align-items-center">
+                      <div>% Hoa hồng F1:</div>
+                      <div className="text-green mlt-2">
+                        {myAffiliate?.profitF1}%
+                      </div>
+                    </div>
+                    <div className="head-line04 d-flex align-items-center mtt-2">
+                      <div>% Hoa hồng F2:</div>
+                      <div className="text-green mlt-2">
+                        {myAffiliate?.profitF2}%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center mtt-4">
+                  <div className="head-line04 mrt-4 flex-shrink-0">
+                    Link giới thiệu:
+                  </div>
+                  <div className="heading-06 mrt-1 input-ref " ref={linkCode}>
+                    {myAffiliate?.linkRef}
+                  </div>
+                  <div className="click-copy flex-shrink-0">
+                    <ButtonCopy black element={linkCode} />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <div className="head-line04">Ước tính giá trị thưởng</div>
-            <div className="heading-03 text-orange">1.000.000<Icon name="icon-xu"/></div>
-          </div>
         </div>
-        <div className="statistic-item">
-        <div className="qr-code">
-        <QRCodeSVG value="hihihih" />
-        </div>
-        <div className="statistic-item-right">
-          <div className="d-flex justify-content-between">
-        <div className="d-flex align-items-center">
-          <div className="head-line04 mrt-4">ID giới thiệu:</div>
-          <div className="heading-06 mrt-1" ref={refCode}>12345678</div><ButtonCopy element={refCode}/>
-        </div>
-<div>
-<div className="head-line04 d-flex align-items-center">
-          <div>% Hoa hồng F1:</div>
-          <div className="text-green mlt-2">0.1%</div>
-        </div>
-        <div className="head-line04 d-flex align-items-center mtt-2">
-          <div>% Hoa hồng F2:</div>
-          <div className="text-green mlt-2">0.05%</div>
-        </div>
-</div>
-          </div>
-          <div className="d-flex align-items-center mtt-4">
-          <div className="head-line04 mrt-4 flex-shrink-0">Link giới thiệu:</div>
-          <div className="heading-06 mrt-1 input-ref " ref={linkCode}>https://www.shopdi.vn/ref?012345678</div><div className="click-copy"><ButtonCopy black element={linkCode}/></div>
-        </div>
-        </div>
-        </div>
-</div>
-      </div>
       </div>
       <div className="data-tab">
-      <div className="container">
-        <div className="data-tab-inner">
-        <div className="data-tab-item">
-        <div className="data-tab-title">
-          <div className="head-line04">Danh sách bạn bè</div>
-          <div className="d-flex align-items-center cursor-pointer"><div className="head-line04">Export Excel</div><div className="mb-1 mlt-1"><Icon name="copy-paper"/></div></div>
+        <div className="container">
+          <div className="data-tab-inner">
+            <div className="data-tab-item">
+              <div className="data-tab-title">
+                <div className="head-line04">Danh sách bạn bè</div>
+                <div
+                  className="d-flex align-items-center cursor-pointer"
+                  onClick={handleExportRefferal}
+                >
+                  <div className="head-line04">Export Excel</div>
+                  <div className="mb-1 mlt-1">
+                    <Icon name="copy-paper" />
+                  </div>
+                </div>
+              </div>
+              <Table
+                columns={columns}
+                dataSources={referrals.map((item) => {return {date:item.createDate,id:item.phoneNumber}} )}
+                handleChangePage={(e) => setPageIndexReferral(e)}
+                pageCount={totalReferralPage}
+              />
+            </div>
+            <div className="data-tab-item">
+              <div className="data-tab-title">
+                <div className="head-line04">Lịch sử thưởng</div>
+                <div
+                  className="d-flex align-items-center cursor-pointer"
+                  onClick={handleExportTransaction}
+                >
+                  <div className="head-line04">Export Excel</div>
+                  <div className="mb-1 mlt-1">
+                    <Icon name="copy-paper" />
+                  </div>
+                </div>
+              </div>
+              <Table
+                columns={columns2}
+                dataSources={transactions.map((item) => {return {date:item.createDate,id:item.phoneNumber,amount:item.profit}} )}
+                handleChangePage={(e) => setPageIndexTransaction(e)}
+                pageCount={totalTransactionPage}
+              />
+            </div>
+          </div>
         </div>
-        <Table columns={columns} dataSources={dataSources} />
-        </div>
-        <div className="data-tab-item">
-        <div className="data-tab-title">
-          <div className="head-line04">Lịch sử thưởng</div>
-          <div className="d-flex align-items-center cursor-pointer"><div className="head-line04">Export Excel</div><div className="mb-1 mlt-1"><Icon name="copy-paper"/></div></div>
-        </div>
-        <Table columns={columns2} dataSources={dataSources} />
-        </div>
-        </div>
-
-      </div>
-
       </div>
     </div>
   );
