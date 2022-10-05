@@ -4,9 +4,10 @@ import React from 'react';
 interface SuccessProps {
   isRegister: boolean;
   onBack: () => void;
+  isLoading?:boolean;
 }
 
-const Success: React.FC<SuccessProps> = ({ isRegister, onBack }) => {
+const Success: React.FC<SuccessProps> = ({ isRegister, onBack,isLoading }) => {
 
 
   return (
@@ -18,14 +19,14 @@ const Success: React.FC<SuccessProps> = ({ isRegister, onBack }) => {
         <br /> {isRegister ? "Đăng ký thành công" : "Đổi mật khẩu thành công"}
       </div>
       {isRegister ? (
-        <div className="text-center">Đăng nhập để nhận ưu đãi dành cho thành viên mới'</div>
+        <div className="text-center">Đăng nhập để nhận ưu đãi dành cho thành viên mới</div>
       ) : (
         <div className="text-center">Việc thay đổi mật khẩu của bạn sẽ khiến bạn đăng xuất khỏi tất cả các thiết bị. Hãy nhập lại mật khẩu mới.</div>
       )}
 
-      <button type="button" className="button button-primary size-l w-100 mt-5 mb-5" onClick={onBack}>
+      <button type="button" className="button button-primary size-l w-100 mt-5 mb-5" onClick={onBack} disabled={isLoading}>
         {/* {isRegister ? 'Tìm hiểu SHOPDI ngay!' : 'Về trang chủ Shopdi'} */}
-        Đăng nhập
+        {isLoading ? "Đang xử lý" : "Đăng nhập"}
       </button>
     </div>
   );

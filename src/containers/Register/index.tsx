@@ -17,6 +17,7 @@ import {
   registerSocialConfirmOtpServices,
   loginBySocialServices,
   registerSocialActiveServices,
+  loginWithUserPass,
 } from "../../services/authencation";
 import * as yup from "yup";
 import "yup-phone";
@@ -54,6 +55,8 @@ const RegisterContainer: React.FC = () => {
   const [affCode, setAffCode] = useState("");
   const [voucher, setVoucher] = useState("");
   const [device, setDevice] = useState("");
+  const [password, setPassword] = useState("");
+  
 
   let [searchParams] = useSearchParams();
   useEffect(() => {
@@ -274,6 +277,7 @@ const RegisterContainer: React.FC = () => {
   const onCreatePinCode = async (code: string) => {
     setError("");
     setIsLoading(true);
+    setPassword(code)
 
     if (typeLogin === 0) {
       const number = parsePhoneNumber(formik.values.phone);
@@ -337,7 +341,24 @@ const RegisterContainer: React.FC = () => {
     }
   };
   const onBack = async () => {
-    loginSuccess(token, refreshToken);
+    const number = parsePhoneNumber(formik.values.phone);
+    setError('');
+    setIsLoading(true);
+    try {
+      const data = await loginWithUserPass({
+        username: formik.values.phone,
+        regionCode: number?.country ?? 'VN',
+        password: password,
+      });
+      setIsLoading(false);
+      if (data.data.status) {
+        loginSuccess(data.data.data.token, data.data.data.refresh_token);
+      } else {
+        setError(data.data.message);
+      }
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
 
   const responseFacebook = async (response: ReactFacebookLoginInfo) => {
