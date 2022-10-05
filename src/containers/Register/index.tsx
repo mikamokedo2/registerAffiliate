@@ -684,7 +684,7 @@ const RegisterContainer: React.FC = () => {
               error={error}
             />
           )}
-          {step === 4 && <Success isRegister onBack={onBack} />}
+          {step === 4 && <Success isRegister onBack={onBack} isLoading={isLoading}/>}
         </div>
         {/* <Footer /> */}
       </div>
