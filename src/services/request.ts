@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url ="https://api-beta.shopdi.io"
+export const url ="https://api-beta.shopdi.io"
 
 const request = axios.create({
   baseURL: url,

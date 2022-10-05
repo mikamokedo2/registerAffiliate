@@ -7,7 +7,7 @@ import * as yup from 'yup';
 const validationSchema = yup.object({
   password: yup
     .string()
-    .required('Bạn quên nhập mật khẩu')
+    .required('Quên nhập mật khẩu')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-=+[\];':",.<>`~/])(?=.{8,})/,
       'Mật khẩu it nhất 8 ký tự bao gồm chữ in hoa, in thường , số và ký tự đặc biệt',

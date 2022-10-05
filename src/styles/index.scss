@@ -1,3 +1,6 @@
+@import url('./font-system.scss');
+@import url('./distance.scss');
+
 *{
     font-family: 'Quicksand', sans-serif;;
 }
@@ -111,9 +114,14 @@ body{
     background-color: red;
     color: #fff;
   }
+  .text-orange{
+    color: #FDC500;
+  }
+  .text-green{
+    color: #03A86C;
+  }
 #app-root{
     min-height: 100vh;
-    max-width: 376px;
     margin:0 auto;
     .heading-2{
         font-size: 22px;
@@ -123,5 +131,9 @@ body{
         max-width: 100%;
         width: 200px;
         margin-bottom: 20px;
+    }
+    .mobile-view{
+      max-width: 376px;
+      margin:0 auto;
     }
 }

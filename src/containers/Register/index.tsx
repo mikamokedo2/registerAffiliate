@@ -1,6 +1,6 @@
-import Icon from "../components/Icon";
-import LayoutWrapLogin from "../components/wrapLogin";
-import ConfirmPassword from "../components/ConfirmPassword";
+import Icon from "../../components/Icon";
+import LayoutWrapLogin from "../../components/wrapLogin";
+import ConfirmPassword from "../../components/ConfirmPassword";
 import { useFormik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
 import { ReactFacebookLoginInfo } from "react-facebook-login";
@@ -17,15 +17,18 @@ import {
   registerSocialConfirmOtpServices,
   loginBySocialServices,
   registerSocialActiveServices,
-} from "../services/authencation";
+} from "../../services/authencation";
 import * as yup from "yup";
 import "yup-phone";
-import OTPForm from "../components/OTPForm";
-import Success from "../components/Success";
-import FormPopup from "../components/FormPopup";
+import OTPForm from "../../components/OTPForm";
+import Success from "../../components/Success";
+import FormPopup from "../../components/FormPopup";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import logo from "../asset/logo.png";
-import { getMobileOS } from "../utils/getDevided";
+import logo from "../../asset/logo.png";
+import { getMobileOS } from "../../utils/getDevided";
+import request from "../../services/request";
+import { AxiosRequestConfig } from "axios";
+import Footer from "../../components/footer";
 
 const validationSchema = yup.object({
   phone: yup.string().phone("VN").required("Bạn chưa nhập số điện thoại"),
@@ -65,15 +68,30 @@ const RegisterContainer: React.FC = () => {
   }, [searchParams]);
 
   const loginSuccess = (token: string, refresh_token: string) => {
-    if (device === "android") {
-      window.open(
-        "https://play.google.com/store/apps/details?id=io.shopdi.app"
-      );
-    } else if (device === "ios") {
-      window.open("https://apps.apple.com/us/app/shopdi/id1625578140");
-    } else {
-      window.open("https://shopdi.com.vn");
-    }
+    // if (device === "android") {
+    //   window.open(
+    //     "https://play.google.com/store/apps/details?id=io.shopdi.app"
+    //   );
+    // } else if (device === "ios") {
+    //   window.open("https://apps.apple.com/us/app/shopdi/id1625578140");
+    // } else {
+    //   window.open("https://shopdi.com.vn");
+    // }
+    localStorage.setItem('_u', token);
+    localStorage.setItem('_uRefresh', refreshToken);
+    request.interceptors.request.use(
+      (config: AxiosRequestConfig<string>) => {
+        const token = localStorage.getItem('_u');
+        if (config && config.headers) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error: string) => {
+        throw error;
+      },
+    );
+    router("/dashboard");
   };
 
   useEffect(() => {
@@ -478,6 +496,7 @@ const RegisterContainer: React.FC = () => {
           />
         </FormPopup>
       )}
+      <div className="mobile-view">
       <div className="d-flex justify-content-center">
         <img src={logo} alt="logo" className="logo" />
       </div>
@@ -608,7 +627,7 @@ const RegisterContainer: React.FC = () => {
                 xfbml
               />
             </div> */}
-            <div className="mt-5 text-center">
+            <div className="mt-5 text-center mb-5">
               <span className="text-gray2">Bạn đã có tài khoản?</span>&nbsp;
               <div
                 className="text-blue cursor-pointer"
@@ -617,7 +636,6 @@ const RegisterContainer: React.FC = () => {
                 <span>Đăng nhập</span>
               </div>
             </div>
-            <a href="intent:#Intent;action=your.example.youtube.CUSTOMACTION;package=your.example.youtube;component=your.example.youtube/.YourActivity;S.extraValueName=WOW;end">Open App</a>
           </div>
         )}
         {step === 2 && (
@@ -642,6 +660,8 @@ const RegisterContainer: React.FC = () => {
           />
         )}
         {step === 4 && <Success isRegister onBack={onBack} />}
+      </div>
+      <Footer />
       </div>
     </LayoutWrapLogin>
   );

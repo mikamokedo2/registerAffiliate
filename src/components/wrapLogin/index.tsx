@@ -12,7 +12,6 @@ const LayoutWrapLogin: React.FC<LayoutWrapLoginProps> = ({ children }) => (
       <div className="d-flex align-items-center justify-content-center w-100 flex-column">
         <div className="login-content">{children}
         </div>
-        <Footer />
       </div>
     </div>
   

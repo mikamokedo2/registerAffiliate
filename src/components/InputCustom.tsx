@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import Icon from './Icon';
+import React from 'react';
 
 interface InputCustomProps {
   placeholder: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type?: string;
+  type: string;
   className?: string;
   styles?: { [k: string]: string };
   error?: boolean;
@@ -28,13 +27,11 @@ const InputCustom: React.FC<InputCustomProps> = ({
   disabled,
   maxLength,
   minLength,
-}) => {
-  const [showPass, setShowPass] = useState(false);
-  return(
+}) => (
   <div>
-    <div className='relative'>
     <input
-      className={`input-text ${className} ${error ? 'error-input' : ''}`}
+      className={`border input-text ${className} ${error ? 'error-input' : ''}`}
+      type={type}
       placeholder={placeholder}
       onChange={onChange}
       style={styles}
@@ -43,19 +40,9 @@ const InputCustom: React.FC<InputCustomProps> = ({
       disabled={disabled}
       maxLength={maxLength}
       minLength={minLength}
-      type={showPass ? type : 'password'}
     />
-    <div
-                className="icon-view-pass"
-                onClick={() => setShowPass(!showPass)}
-              >
-                <Icon name={showPass ? 'eye' : 'eye-block'} />
-              </div>
-    </div>
-
-
-              {message && error && <div className="text-red mt-2 font-size13">{message}</div>}
+    {message && error && <div className="text-red mt-2 font-size12">{message}</div>}
   </div>
-)};
+);
 
 export default InputCustom;

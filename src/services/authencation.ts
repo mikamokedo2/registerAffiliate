@@ -269,3 +269,35 @@ export const removeSSo = (params: {
     method: 'DELETE',
     data: params,
   });
+
+
+  export interface IAuthRequestSignIn {
+    username: string;
+    regionCode: string;
+    password: string;
+  }
+
+  export const loginWithUserPass = (
+    data: IAuthRequestSignIn,
+  ): Promise<AxiosResponse<BaseResponse<LoginSocialData>>> =>
+    request({
+      headers: {
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+      },
+      url: '/api/v1/auth/signin',
+      method: 'POST',
+      data,
+    });
+
+    export const getUserProfileServices = (): Promise<
+    AxiosResponse<BaseResponse<UserEntity>>
+  > =>
+    request({
+      headers: {
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+      },
+      url: `/api/v1/users`,
+      method: 'GET',
+    });
