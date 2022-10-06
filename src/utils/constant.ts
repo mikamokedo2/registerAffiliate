@@ -8,12 +8,12 @@ const fileType =
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
   const fileExtension = '.xlsx';
   
-export const exportToCSV = (dataExport:any) => {
+export const exportToCSV = (dataExport:any,name:string) => {
     const ws = XLSX.utils.json_to_sheet(dataExport);
     const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
     const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
     const data = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(data, `campaign-${new Date().toLocaleString()}` + fileExtension);
+    FileSaver.saveAs(data, `${name}-${new Date().toLocaleString()}` + fileExtension);
   };
 
 export const cutWallet = (wallet:string) =>{

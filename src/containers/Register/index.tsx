@@ -61,7 +61,6 @@ const RegisterContainer: React.FC = () => {
   let [searchParams] = useSearchParams();
   useEffect(() => {
     const sdiaf = searchParams.get("affcode");
-    console.log(sdiaf);
     const voucherCode = searchParams.get("vouchercode");
     if (sdiaf) {
       localStorage.setItem("shopdi-connect", String(sdiaf));
@@ -341,24 +340,25 @@ const RegisterContainer: React.FC = () => {
     }
   };
   const onBack = async () => {
-    const number = parsePhoneNumber(formik.values.phone);
-    setError("");
-    setIsLoading(true);
-    try {
-      const data = await loginWithUserPass({
-        username: formik.values.phone,
-        regionCode: number?.country ?? "VN",
-        password: password,
-      });
-      setIsLoading(false);
-      if (data.data.status) {
-        loginSuccess(data.data.data.token, data.data.data.refresh_token);
-      } else {
-        setError(data.data.message);
-      }
-    } catch (error) {
-      setIsLoading(false);
-    }
+    // const number = parsePhoneNumber(formik.values.phone);
+    // setError("");
+    // setIsLoading(true);
+    // try {
+    //   const data = await loginWithUserPass({
+    //     username: formik.values.phone,
+    //     regionCode: number?.country ?? "VN",
+    //     password: password,
+    //   });
+    //   setIsLoading(false);
+    //   if (data.data.status) {
+    //     loginSuccess(data.data.data.token, data.data.data.refresh_token);
+    //   } else {
+    //     setError(data.data.message);
+    //   }
+    // } catch (error) {
+    //   setIsLoading(false);
+    // }
+    loginSuccess(token, refreshToken);
   };
 
   const responseFacebook = async (response: ReactFacebookLoginInfo) => {

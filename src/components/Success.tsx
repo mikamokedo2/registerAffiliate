@@ -29,7 +29,7 @@ const Success: React.FC<SuccessProps> = ({ isRegister, onBack,isLoading }) => {
         {isLoading ? "Đang xử lý" : "Đăng nhập"}
       </button>
 
-      <div className="text-center mtt-3">hoặc tải và sử dụng App Shopdi</div>
+      <div className="text-center mtt-3 mbt-2">hoặc tải và sử dụng App Shopdi</div>
       <div className="mt3-5">
         <DownloadApp title=""/>
       </div>

@@ -124,8 +124,6 @@ const Dashboard = () => {
     }
   };
 
-  console.log(myAffiliate);
-
   useEffect(() => {
     fetchMyAffiliate();
   }, []);
@@ -143,7 +141,7 @@ const Dashboard = () => {
         pageIndex: 1,
         pageSize: totalTransaction,
       });
-      exportToCSV(data.data);
+      exportToCSV(data.data,'transaction');
     } catch (error) {
       console.log(error);
     }
@@ -155,7 +153,7 @@ const Dashboard = () => {
         pageIndex: 1,
         pageSize: totalReferral,
       });
-      exportToCSV(data.data);
+      exportToCSV(data.data,'referral');
     } catch (error) {
       console.log(error);
     }

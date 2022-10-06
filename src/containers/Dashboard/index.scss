@@ -153,6 +153,11 @@
                             }
                             .statistic-item-first{
                                 margin-bottom: 30px;
+                                flex-direction: column;
+                                align-items: center;
+                                .item-first{
+                                    margin-right:0;
+                                }
                             }
                             .statistic-item-second{
                                 padding:0;
@@ -181,6 +186,10 @@
                                 max-width: 500px;
                                 justify-content: space-around;
                             }
+                        }
+                        .input-ref{
+                            padding:5px;
+                            
                         }
                 
 
