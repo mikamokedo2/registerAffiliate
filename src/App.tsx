@@ -1,13 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'antd/dist/antd.css';
 import './styles/index.scss';
 import 'react-phone-number-input/style.css';
-import RegisterContainer from './containers/Register';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginContainer from './containers/Login';
 import AuthProvider from './hook/AuthProvider';
 import DashBoardContainer from './containers/Dashboard';
 import Home from './containers/Home';
-import 'antd/dist/antd.css';
 
 
 

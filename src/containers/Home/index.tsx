@@ -24,35 +24,12 @@ const index = () => {
                   </Tabs.TabPane>
                   <Tabs.TabPane tab="Chưa có tài khoản" key="2">
                     <RegisterContainer />
-                    <div className="d-flex flex-column align-items-center mtt-5">
-                      <div className="botton-sizem">
-                        HOẶC TẢI ỨNG DỤNG vÀ ĐĂNG KÝ
-                        <div className="mt-2 d-flex justify-content-center">
-                          <div className="mrt-2">
-                            <a
-                              className="hover-opacity"
-                              href="https://apps.apple.com/us/app/shopdi/id1625578140"
-                            >
-                              <img src="/img/ios.png" alt="app-store" />
-                            </a>
-                          </div>
-                          <div className="mt-2-mobile">
-                            <a
-                              className="hover-opacity"
-                              href="https://play.google.com/store/apps/details?id=io.shopdi.app"
-                            >
-                              <img src="/img/android.png" alt="google-play" />
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </Tabs.TabPane>
                 </Tabs>
               </div>
               <div className="footer">
                 <footer>
-                  <div className="d-flex">
+                  <div className="d-flex wrap-footer-home">
                     <div className="col-footer">
                       <div>
                         <a title="shopdi" className="footer__logo" href="/">

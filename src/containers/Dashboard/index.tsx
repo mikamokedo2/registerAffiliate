@@ -16,6 +16,9 @@ import {
 } from "../../interfaces/affiliate";
 import { exportToCSV } from "../../utils/constant";
 import TopUser from "../../components/TopUser";
+import DownloadApp from "../../components/downloadApp";
+import { useMediaQuery } from "react-responsive";
+import { Tabs } from "antd";
 
 const columns = [
   {
@@ -56,9 +59,11 @@ const columns2 = [
   },
 ];
 
-
-
 const Dashboard = () => {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 991px)",
+  });
+
   const refCode = useRef(null);
   const linkCode = useRef(null);
   const [myAffiliate, setMyAffiliate] = useState<MyAffiliateInfo | null>(null);
@@ -91,12 +96,11 @@ const Dashboard = () => {
         pageIndex: pageIndexTransaction,
         pageSize: 20,
       });
-      console.log(result.data);
+     
       if (result.data.status) {
         setTransaction(result.data.data);
         setTotalTransaction(result.data.totalRecord ?? 1);
         setTotalTransactionPage(result.data.totalPaging ?? 1);
-        console.log(result.data.status);
       }
     } catch (error) {
       console.log(error);
@@ -202,38 +206,25 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="topten-wrap">
-        <div className="top-ten-inner contabner">
-          {myAffiliate?.topRefernal?.map((item, index) => (
-            <TopUser
-            key={item.walletCode}
-              amount={item.total}
-              index={index + 1}
-              icon={index === 0 ? "platinum" : index === 1 ? "gold" : "sliver"}
-              wallet={item.walletCode}
-            />
-          ))}
-        </div>
-      </div>
       <div className="statistic">
         <div className="container">
           <div className="statistic-inner">
-            <div className="statistic-item d-flex">
+            <div className="statistic-item statistic-item-first">
               <div className="item-first">
-                <div className="head-line04">Số bạn bè giới thiệu bạn bè</div>
+                <div className="head-line04">Tổng số F1:</div>
                 <div className="heading-03 text-orange">
-                  {myAffiliate?.totalRefernal}
+                  {myAffiliate?.totalRefernalF1 ?? 0}
+                </div>
+                <div className="head-line04 mtt-3">Tổng số F2:</div>
+                <div className="heading-03 text-orange">
+                  {myAffiliate?.totalRefernalF2 ?? 0}
                 </div>
               </div>
-              <div>
-                <div className="head-line04">Ước tính giá trị thưởng</div>
-                <div className="heading-03 text-orange">
-                  {myAffiliate?.totalProfit}&nbsp;
-                  <Icon name="coin-small" size={20} />
-                </div>
+              <div className="item-second">
+                <DownloadApp title="" />
               </div>
             </div>
-            <div className="statistic-item">
+            <div className="statistic-item statistic-item-second">
               <div className="qr-code">
                 <QRCodeSVG value={myAffiliate?.linkRef ?? ""} />
               </div>
@@ -277,50 +268,102 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      <div className="topten-wrap">
+        <div className="top-ten-inner container">
+          {myAffiliate?.topRefernal?.map((item, index) => (
+            <TopUser
+              key={item.walletCode}
+              amount={item.total}
+              index={index + 1}
+              icon={index === 0 ? "platinum" : index === 1 ? "gold" : "sliver"}
+              wallet={item.walletCode}
+            />
+          ))}
+        </div>
+      </div>
       <div className="data-tab">
         <div className="container">
-          <div className="data-tab-inner">
-            <div className="data-tab-item">
-              <div className="data-tab-title">
-                <div className="head-line04">Danh sách bạn bè</div>
-                <div
-                  className="d-flex align-items-center cursor-pointer"
-                  onClick={handleExportRefferal}
-                >
-                  <div className="head-line04">Export Excel</div>
-                  <div className="mb-1 mlt-1">
-                    <Icon name="copy-paper" />
+          {!isMobile ? (
+            <div className="data-tab-inner">
+              <div className="data-tab-item">
+                <div className="data-tab-title">
+                  <div className="head-line04">Danh sách bạn bè</div>
+                  <div
+                    className="d-flex align-items-center cursor-pointer"
+                    onClick={handleExportRefferal}
+                  >
+                    <div className="head-line04">Export Excel</div>
+                    <div className="mb-1 mlt-1">
+                      <Icon name="copy-paper" />
+                    </div>
                   </div>
                 </div>
+                <Table
+                  columns={columns}
+                  dataSources={referrals.map((item) => {
+                    return { date: item.createDate, id: item.phoneNumber };
+                  })}
+                  handleChangePage={(e) => setPageIndexReferral(e)}
+                  pageCount={totalReferralPage}
+                />
               </div>
-              <Table
-                columns={columns}
-                dataSources={referrals.map((item) => {return {date:item.createDate,id:item.phoneNumber}} )}
-                handleChangePage={(e) => setPageIndexReferral(e)}
-                pageCount={totalReferralPage}
-              />
-            </div>
-            <div className="data-tab-item">
-              <div className="data-tab-title">
-                <div className="head-line04">Lịch sử thưởng</div>
-                <div
-                  className="d-flex align-items-center cursor-pointer"
-                  onClick={handleExportTransaction}
-                >
-                  <div className="head-line04">Export Excel</div>
-                  <div className="mb-1 mlt-1">
-                    <Icon name="copy-paper" />
+              <div className="data-tab-item">
+                <div className="data-tab-title">
+                  <div className="head-line04">Lịch sử thưởng</div>
+                  <div
+                    className="d-flex align-items-center cursor-pointer"
+                    onClick={handleExportTransaction}
+                  >
+                    <div className="head-line04">Export Excel</div>
+                    <div className="mb-1 mlt-1">
+                      <Icon name="copy-paper" />
+                    </div>
                   </div>
                 </div>
+                <Table
+                  columns={columns2}
+                  dataSources={transactions.map((item) => {
+                    return {
+                      date: item.createDate,
+                      id: item.phoneNumber,
+                      amount: item.profit,
+                    };
+                  })}
+                  handleChangePage={(e) => setPageIndexTransaction(e)}
+                  pageCount={totalTransactionPage}
+                />
               </div>
-              <Table
-                columns={columns2}
-                dataSources={transactions.map((item) => {return {date:item.createDate,id:item.phoneNumber,amount:item.profit}} )}
-                handleChangePage={(e) => setPageIndexTransaction(e)}
-                pageCount={totalTransactionPage}
-              />
             </div>
-          </div>
+          ) : (
+            <div className="tab">
+              <Tabs defaultActiveKey="1" centered>
+                <Tabs.TabPane tab="Danh sách bạn bè" key="1">
+                  <Table
+                    columns={columns}
+                    dataSources={referrals.map((item) => {
+                      return { date: item.createDate, id: item.phoneNumber };
+                    })}
+                    handleChangePage={(e) => setPageIndexReferral(e)}
+                    pageCount={totalReferralPage}
+                  />
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="Lịch sử thưởng" key="2">
+                  <Table
+                    columns={columns2}
+                    dataSources={transactions.map((item) => {
+                      return {
+                        date: item.createDate,
+                        id: item.phoneNumber,
+                        amount: item.profit,
+                      };
+                    })}
+                    handleChangePage={(e) => setPageIndexTransaction(e)}
+                    pageCount={totalTransactionPage}
+                  />
+                </Tabs.TabPane>
+              </Tabs>
+            </div>
+          )}
         </div>
       </div>
     </div>

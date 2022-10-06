@@ -61,75 +61,7 @@ const Footer: React.FC = () => {
             </a>
           </div>
         </div>
-
-        {/* <div className="d-flex flex-column col-footer">
-          <div className="title text-uppercase">Hỗ trợ khách hàng</div>
-
-          <a href="tel:19003395" className="item">
-            Hotline và Chat trực tuyến (24/7)
-          </a>
-
-          <a href="mailto:Support@shopdi.com.vn" className="item">
-            Trung tâm hỗ trợ
-          </a>
-
-          <a className="item" href="/huong-dan">
-            Hướng dẫn đặt hàng và thanh toán
-          </a>
-
-          <a href="/quy-che-hoat-dong" className="item">
-            Quy chế hoạt động website
-          </a>
-
-          <a href="/dieu-khoan-dich-vu" className="item">
-            Điều khoản sử dụng
-          </a>
-        </div>
         <div className="d-flex flex-column col-footer">
-          <div className="title text-uppercase">Về Shopdi</div>
-
-          <a href="/shopdi-xu" className="item">
-            Chính sách đổi Shopdi xu
-          </a>
-
-          <a className="item" href="/chinh-sach-bao-mat">
-            Chính sách bảo mật thanh toán
-          </a>
-
-          <a href="/chinh-sach-quyen-rieng-tu" className="item">
-            Chính sách quyền riêng tư
-          </a>
-
-          <a href="/chinh-sach-doi-tra-hang" className="item">
-            Chính sách kiểm hàng, đổi trả và hoàn tiền
-          </a>
-        </div> */}
-
-        <div className="d-flex flex-column col-footer">
-          {/* <div className="title text-uppercase">{t.downLoadApp}</div>
-            <div className="mt-2 flex-column-mobile">
-              <div className="mr-2">
-                <Link
-                  prefetch={false}
-                  href="https://apps.apple.com/us/app/shopdi/id1625578140"
-                >
-                  <a className="hover-opacity">
-                    <img src="/img/ios.png" alt="app-store" />
-                  </a>
-                </Link>
-              </div>
-              <div className="mt-2-mobile">
-                <Link
-                  prefetch={false}
-                  href="https://play.google.com/store/apps/details?id=io.shopdi.app"
-                >
-                  <a className="hover-opacity">
-                    <img src="/img/android.png" alt="google-play" />
-                  </a>
-                </Link>
-              </div>
-            </div> */}
-
           <div className="title text-uppercase">KẾT NỐI VỚI CHÚNG TÔI</div>
           <div className="d-flex flex-wrap">
             <div className="footer-socials-item">
@@ -196,14 +128,6 @@ const Footer: React.FC = () => {
               </div> */}
           </div>
         </div>
-        {/* <div className="d-flex flex-column col-footer">
-            <p className="title text-uppercase">Phương thức thanh toán</p>
-            <img
-              src="/img/payment.png"
-              alt="payment-gate"
-              style={{ maxWidth: '120px' }}
-            />
-          </div> */}
       </div>
       <div className="footer-bottom d-flex align-items-center">
         <p className="mb-0 small-caption ml-5">

@@ -1,0 +1,11 @@
+#down-app{
+    .button-download{
+        cursor: pointer;
+        &:hover{
+            opacity: 0.8;
+        }
+        &.active{
+            border:1px solid #fff;
+        }
+    }
+}

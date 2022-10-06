@@ -30,6 +30,7 @@ import { getMobileOS } from "../../utils/getDevided";
 import request from "../../services/request";
 import { AxiosRequestConfig } from "axios";
 import Footer from "../../components/footer";
+import DownloadApp from "../../components/downloadApp";
 
 const validationSchema = yup.object({
   phone: yup.string().phone("VN").required("Bạn chưa nhập số điện thoại"),
@@ -56,7 +57,6 @@ const RegisterContainer: React.FC = () => {
   const [voucher, setVoucher] = useState("");
   const [device, setDevice] = useState("");
   const [password, setPassword] = useState("");
-  
 
   let [searchParams] = useSearchParams();
   useEffect(() => {
@@ -277,7 +277,7 @@ const RegisterContainer: React.FC = () => {
   const onCreatePinCode = async (code: string) => {
     setError("");
     setIsLoading(true);
-    setPassword(code)
+    setPassword(code);
 
     if (typeLogin === 0) {
       const number = parsePhoneNumber(formik.values.phone);
@@ -342,12 +342,12 @@ const RegisterContainer: React.FC = () => {
   };
   const onBack = async () => {
     const number = parsePhoneNumber(formik.values.phone);
-    setError('');
+    setError("");
     setIsLoading(true);
     try {
       const data = await loginWithUserPass({
         username: formik.values.phone,
-        regionCode: number?.country ?? 'VN',
+        regionCode: number?.country ?? "VN",
         password: password,
       });
       setIsLoading(false);
@@ -661,6 +661,9 @@ const RegisterContainer: React.FC = () => {
                 <span>Đăng nhập</span>
               </div>
             </div> */}
+              <div className="mtt-5">
+                <DownloadApp title="HOẶC TẢI ỨNG DỤNG vÀ ĐĂNG KÝ"/>
+              </div>
             </div>
           )}
           {step === 2 && (
@@ -684,7 +687,9 @@ const RegisterContainer: React.FC = () => {
               error={error}
             />
           )}
-          {step === 4 && <Success isRegister onBack={onBack} isLoading={isLoading}/>}
+          {step === 4 && (
+            <Success isRegister onBack={onBack} isLoading={isLoading} />
+          )}
         </div>
         {/* <Footer /> */}
       </div>

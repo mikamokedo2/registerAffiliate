@@ -31,6 +31,8 @@ export interface PackageAffiliateEntity {
     totalProfitHour: number;
     topRefernal:Referral[];
     topProfit:Referral[];
+    totalRefernalF1:number;
+totalRefernalF2:number;
   }
   
   export interface AffiliateTransactionEntity {
