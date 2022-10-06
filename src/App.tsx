@@ -1,37 +1,28 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'antd/dist/antd.css';
-import './styles/index.scss';
-import 'react-phone-number-input/style.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LoginContainer from './containers/Login';
-import AuthProvider from './hook/AuthProvider';
-import DashBoardContainer from './containers/Dashboard';
-import Home from './containers/Home';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LoginContainer from "./containers/Login";
+import AuthProvider from "./hook/AuthProvider";
+import DashBoardContainer from "./containers/Dashboard";
+import Home from "./containers/Home";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "antd/dist/antd.css";
+import "./styles/index.scss";
+import "react-phone-number-input/style.css";
 
-
-
-function App() {  
+function App() {
   return (
-   
     <div id="app-root">
-      <div className='container-app'>
-
-      <BrowserRouter>
-      <AuthProvider>
-      <Routes>
-
-      <Route path='/login' element={<LoginContainer />} />
-      <Route path='/dashboard' element={<DashBoardContainer />} />
-      <Route index element={<Home />} />
-
-      </Routes>
-      </AuthProvider>
-      </BrowserRouter>
-  
+      <div className="container-app">
+        <BrowserRouter>
+          <AuthProvider>
+            <Routes>
+              <Route path="/login" element={<LoginContainer />} />
+              <Route path="/dashboard" element={<DashBoardContainer />} />
+              <Route index element={<Home />} />
+            </Routes>
+          </AuthProvider>
+        </BrowserRouter>
       </div>
-
     </div>
-
   );
 }
 

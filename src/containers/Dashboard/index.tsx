@@ -274,7 +274,7 @@ const Dashboard = () => {
               amount={item.total}
               index={index + 1}
               icon={index === 0 ? "platinum" : index === 1 ? "gold" : "sliver"}
-              wallet={item.walletCode}
+              wallet={item.phoneNumber}
             />
           ))}
         </div>

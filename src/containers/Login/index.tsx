@@ -32,6 +32,7 @@ import { ACCESS_TOKEN_KEY } from "../../utils/constant";
 import request from "../../services/request";
 import { AxiosRequestConfig } from "axios";
 import Footer from "../../components/footer";
+import LayoutHome from "../Home/LayoutHome";
 // import { useAuth } from "../hook/AuthProvider";
 
 const validationSchema = yup.object({
@@ -324,6 +325,7 @@ const LoginContainer = () => {
   };
 
   return (
+    <LayoutHome>
     <LayoutWrapLogin>
       {addPhone && (
         <FormPopup
@@ -403,15 +405,11 @@ const LoginContainer = () => {
         </FormPopup>
       )}
       <div className="mobile-view">
-            <div className="d-flex justify-content-center">
-        <img src={logo} alt="logo" className="logo" />
-      </div>
-
       <div className="title heading-2">Đăng nhập</div>
       <div className="login-wrap" style={{ minHeight: '400px' }}>
         {step === 1 && (
           <div>
-            <div className="mb-3">
+            <div className="mb-3 phone-input-main">
               <div
                 className={`input-phone ${
                   formik.touched.phone && Boolean(formik.errors.phone)
@@ -467,16 +465,16 @@ const LoginContainer = () => {
 
             <button
               type="button"
-              className="button-login"
+              className="button button-primary size-l w-100 mtt-5"
               onClick={() => formik.handleSubmit()}
               disabled={isLoading}
             >
               {isLoading ? "Đang xử lý" : "Đăng nhập"}
             </button>
-            <div className="d-flex mt-5 justify-content-center">
+            {/* <div className="d-flex mt-5 justify-content-center">
               <div className="text-or">Đăng nhập bằng mạng xã hội</div>
-            </div>
-            <div className="d-flex justify-content-center">
+            </div> */}
+            {/* <div className="d-flex justify-content-center">
               <GoogleLogin
                 clientId={process.env.REACT_APP_GOOGLE_ID ?? ''}
                 render={(renderProps) => (
@@ -515,9 +513,9 @@ const LoginContainer = () => {
                 cookie
                 xfbml
               />
-            </div>
+            </div> */}
             <div className="mt-5 text-center mb-5">
-              <span className="text-gray2">Bạn chưa có tài khoản</span>&nbsp;
+              <span className="text-white">Bạn chưa có tài khoản</span>&nbsp;
    
                 <a className="text-blue" href="/">
                   <span>Đăng ký</span>
@@ -536,9 +534,9 @@ const LoginContainer = () => {
         )}
         {step === 3 && <Success isRegister onBack={onBack} />}
       </div>
-      <Footer />
       </div>
     </LayoutWrapLogin>
+    </LayoutHome>
   );
 };
 

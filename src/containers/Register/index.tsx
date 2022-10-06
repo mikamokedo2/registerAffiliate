@@ -108,15 +108,15 @@ const RegisterContainer: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (device === "android") {
-      // setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=io.shopdi.app" as Location | (string & Location); }, 25);
-      window.location =
-        "intent:#Intent;action=your.example.youtube.CUSTOMACTION;package=your.example.youtube;component=your.example.youtube/.YourActivity;S.extraValueName=WOW;end" as
-          | Location
-          | (string & Location);
-      return;
-    }
+  // useEffect(() => {
+  //   if (device === "android") {
+  //     // setTimeout(function () { window.location = "https://play.google.com/store/apps/details?id=io.shopdi.app" as Location | (string & Location); }, 25);
+  //     window.location =
+  //       "intent:#Intent;action=your.example.youtube.CUSTOMACTION;package=your.example.youtube;component=your.example.youtube/.YourActivity;S.extraValueName=WOW;end" as
+  //         | Location
+  //         | (string & Location);
+  //     return;
+  //   }
     // else if (device === "ios") {
     //   setTimeout(function () { window.location = "https://apps.apple.com/us/app/shopdi/id1625578140" as Location | (string & Location); }, 25);
     //   window.location = "appname://" as Location | (string & Location);
@@ -124,7 +124,7 @@ const RegisterContainer: React.FC = () => {
     // } else {
     //   window.open("https://shopdi.com.vn");
     // }
-  }, [device]);
+  // }, [device]);
 
   const formikAddPhone = useFormik({
     initialValues: {
